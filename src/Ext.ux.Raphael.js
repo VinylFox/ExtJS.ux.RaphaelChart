@@ -67,3 +67,31 @@ Ext.ux.Raphael = Ext.extend(Ext.BoxComponent, {
     }
     
 });
+
+Ext.ux.RaphaelPanel = Ext.extend(Ext.Panel, {
+    initComponent: function(){
+		this.raphael = new Ext.ux.Raphael();
+		Ext.apply(this, {items:[this.raphael]});
+		Ext.ux.RaphaelPanel.superclass.initComponent.call(this);
+	}
+});
+
+Ext.ns('Ext.ux.raphael');
+
+Ext.ux.raphael.Chart = Ext.extend(Ext.ux.RaphaelPanel, {
+    initComponent: function(){
+    	Ext.chart.Chart.superclass.initComponent.call(this);
+    	this.addEvents(
+    			'itemmouseover',
+    			'itemmouseout',
+    			'itemclick',
+    			'itemdoubleclick',
+    			'refresh'
+    	);
+    	this.store = Ext.StoreMgr.lookup(this.store);
+	}
+});
+
+Ext.ux.raphael.LineChart = Ext.extend(Ext.ux.raphael.Chart, {});
+
+Ext.reg('rlinechart', Ext.ux.raphael.LineChart);
